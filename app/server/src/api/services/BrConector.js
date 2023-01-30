@@ -1,4 +1,4 @@
-import axios from 'axios';
+const axios = require('axios');
 
 class BrConector {
     static async list() {
@@ -42,4 +42,4 @@ class BrConector {
     }
 };
 
-export { BrConector };
+module.exports =  BrConector ;

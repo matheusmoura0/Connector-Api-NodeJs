@@ -1,13 +1,11 @@
-require('dotenv').config();
-
 const express = require('express');
-const app = express();
-const port = process.env.PORT || 3000;
+const ProductRouter = require('./routes/ProductRouter');
 
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-});
+const app = express();
+const port = 3000;
+
+app.use('/products', ProductRouter);
 
 app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`);
+    console.log(`Server listening on port ${port}`);
 });

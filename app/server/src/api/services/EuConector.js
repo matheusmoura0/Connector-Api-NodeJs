@@ -1,4 +1,4 @@
-import axios from 'axios';
+const axios = require('axios');
 
 class EuConector {
     static async list() {
@@ -42,4 +42,4 @@ class EuConector {
     }
 }
 
-export { EuConector };
+module.exports =  EuConector;
