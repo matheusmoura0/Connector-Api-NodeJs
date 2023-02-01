@@ -1,3 +1,5 @@
+const { OrderItem } = require('./order_item.model');
+
 module.exports = (sequelize) => {
   const Order = sequelize.define('Order', {});
 
