@@ -15,7 +15,6 @@ const ProductController = {
 
     createProduct: (req, res) => {
         const data = req.body;
-        console.log(data)
         ProductService.createProduct(data);
         res.status(200).send('Product created successfully');
     },
