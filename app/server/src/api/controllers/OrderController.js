@@ -73,35 +73,52 @@ exports.getOrders = async (req, res) => {
     }
 };
 
-exports.updateOrder = async (req, res) => {
+exports.update = async (req, res) => {
     try {
-        const {
-            id
-        } = req.params;
-        const {
-            buyerName,
-            buyerEmail
-        } = req.body;
-
+        const { id } = req.params;
         const order = await Order.findByPk(id);
 
         if (!order) {
-            return res.status(404).json({
-                error: 'Order not found'
-            });
+            return res.status(404).json({ error: 'Order not found' });
         }
 
-        const updatedOrder = await order.update({
-            buyerName,
-            buyerEmail
-        });
+        const { buyer_id, items } = req.body;
+
+        if (buyer_id) {
+            const buyer = await Buyer.findByPk(buyer_id);
+            if (!buyer) {
+                return res.status(404).json({ error: 'Buyer not found' });
+            }
+            order.buyer_id = buyer_id;
+        }
+
+        if (items) {
+            const orderItems = await OrderItem.findAll({
+                where: { order_id: id },
+            });
+            await Promise.all(
+                orderItems.map(async (orderItem) => {
+                    await orderItem.destroy();
+                })
+            );
+            const newOrderItems = items.map((item) => {
+                return {
+                    order_id: id,
+                    product_id: item.product_id,
+                    quantity: item.quantity,
+                };
+            });
+            await OrderItem.bulkCreate(newOrderItems);
+        }
+
+        await order.save();
 
         return res.json({
-            order: updatedOrder
+            id,
+            buyer_id: order.buyer_id,
+            items: items,
         });
-    } catch (error) {
-        return res.status(500).json({
-            error: error.message
-        });
+    } catch (err) {
+        return res.status(400).json({ error: err.message });
     }
-};
+}
