@@ -11,7 +11,9 @@ exports.create = async (req, res) => {
         items
     } = req.body;
     try {
+        console.log(buyerId, items)
         const buyer = await Buyer.findByPk(buyerId);
+
         if (!buyer) return res.status(404).send({
             error: 'Buyer not found'
         });
@@ -42,7 +44,7 @@ exports.create = async (req, res) => {
         });
     } catch (error) {
         return res.status(500).send({
-            error: 'Error creating order'
+            error: error.message
         });
     }
 };
