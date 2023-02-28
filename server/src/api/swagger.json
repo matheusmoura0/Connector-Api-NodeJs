@@ -1,0 +1,209 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "My Application",
+        "description": "This is my application's API documentation.",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/productOrders": {
+            "post": {
+                "description": "Create a new product order.",
+                "responses": {
+                    "201": {
+                        "description": "Product order created."
+                    }
+                }
+            }
+        },
+        "/productOrders/{id}": {
+            "get": {
+                "description": "Get a specific product order by ID.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the product order to retrieve.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Product order found.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProductOrder"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Product order not found."
+                    }
+                }
+            }
+        },
+        "/orders": {
+            "get": {
+                "description": "Get all orders.",
+                "responses": {
+                    "200": {
+                        "description": "Orders found.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OrderList"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create a new order.",
+                "responses": {
+                    "201": {
+                        "description": "Order created."
+                    }
+                }
+            }
+        },
+        "/orders/{id}": {
+            "put": {
+                "description": "Update a specific order by ID.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the order to update.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Order updated."
+                    },
+                    "404": {
+                        "description": "Order not found."
+                    }
+                }
+            }
+        },
+        "/products": {
+            "get": {
+                "description": "Get all products.",
+                "responses": {
+                    "200": {
+                        "description": "Products found.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProductList"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/products/{id}": {
+            "get": {
+                "description": "Get a specific product by ID.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the product to retrieve.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Product found.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Product"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Product not found."
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ProductOrder": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "product": {
+                        "type": "string"
+                    },
+                    "quantity": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "OrderList": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/Order"
+                }
+            },
+            "Order": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "product": {
+                        "type": "string"
+                    },
+                    "quantity": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "ProductList": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/Product"
+                }
+            },
+            "Product": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "price": {
+                        "type": "number"
+                    }
+                }
+            }
+        }
+    }
+}
